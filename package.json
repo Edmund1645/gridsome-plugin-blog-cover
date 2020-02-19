@@ -1,0 +1,30 @@
+{
+  "name": "gridsome-plugin-blog-cover",
+  "version": "0.0.0",
+  "description": "Automatically generate cover images for your blog posts",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Edmund1645/gridsome-plugin-blog-cover.git"
+  },
+  "keywords": [
+    "gridsome",
+    "gridsome",
+    "plugin",
+    "ssg",
+    "blog",
+    "cover"
+  ],
+  "author": "Edmund1645",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Edmund1645/gridsome-plugin-blog-cover/issues"
+  },
+  "homepage": "https://github.com/Edmund1645/gridsome-plugin-blog-cover#readme",
+  "dependencies": {
+    "node-html-to-image": "^1.1.0"
+  }
+}
