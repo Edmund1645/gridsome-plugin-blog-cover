@@ -1,6 +1,6 @@
 {
   "name": "gridsome-plugin-blog-cover",
-  "version": "0.0.0",
+  "version": "0.0.1-pre-alpha",
   "description": "Automatically generate cover images for your blog posts",
   "main": "index.js",
   "scripts": {
