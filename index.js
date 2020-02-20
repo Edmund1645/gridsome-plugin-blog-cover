@@ -16,7 +16,7 @@ const defaultOptions = {
   outputDir: 'content/images/'
 };
 
-const call = function(api, passedOptions) {
+module.exports = function(api, passedOptions) {
   const options = { ...defaultOptions, ...passedOptions }; // existing keys will be overriden
 
   api.onCreateNode(node => {
@@ -40,5 +40,3 @@ const call = function(api, passedOptions) {
   // console.log(path.relative(options.postDir, options.outputDir));
   // console.log(options);
 };
-
-call('', { typeName: 'curry' });
