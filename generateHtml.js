@@ -1,7 +1,5 @@
-module.exports = function(title, { backgroundColors, imgHeight, imgWidth, border }) {
+module.exports = function(title, { backgroundColors, imgHeight, imgWidth, border, domain }) {
   const bgColor = backgroundColors[Math.floor(Math.random() * backgroundColors.length)];
-
-  console.log(backgroundColors, bgColor, imgHeight, imgWidth, border);
 
   const template = `
     <html>
@@ -20,8 +18,6 @@ module.exports = function(title, { backgroundColors, imgHeight, imgWidth, border
             background: ${bgColor};
             color: #ffffff;
             font-family:  -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-            font-size: 2rem;
-            text-transform: capitalize;
           }
 
           div.container{
@@ -29,13 +25,27 @@ module.exports = function(title, { backgroundColors, imgHeight, imgWidth, border
             text-align: left;
             padding: 30px;
             width: 100%;
-            height: 100%
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between
+          }
+          h1.title{
+            font-size: 3.7rem;
+            text-transform: capitalize;
+          }
+          p.domain{
+            justify-contnet: flex-end;
+            text-align: right;
+            font-style: italic
           }
         </style>
       </head>
       <body>
           <div class="container">
-            <h1>${title}</h1>
+            <h1 class="title">${title}</h1>
+
+            <p class="domain">${domain}</p>
           </div>
       </body>
     </html>

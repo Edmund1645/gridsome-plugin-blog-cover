@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+
 const path = require('path');
 const createImage = require('node-html-to-image');
 const generateHtml = require('./generateHtml');
@@ -9,26 +11,32 @@ const defaultOptions = {
   imgWidth: '700px',
   imgHeight: '650px',
   border: true,
+  domain: 'https://theninja.blog',
   postDir: 'content/posts/',
   outputDir: 'content/images/'
 };
 
 const call = function(api, passedOptions) {
-  const options = { ...defaultOptions, ...passedOptions };
+  const options = { ...defaultOptions, ...passedOptions }; // existing keys will be overriden
 
-  console.info('Generating cover images');
-  createImage({
-    output: `${options.outputDir}/test.png`,
-    html: generateHtml('how to use eslint and prettier in your javascript applications', options)
-  }).then(() => console.info(`Generated one image`));
+  api.onCreateNode(node => {
+    if (node.internal.typeName === options.typeName) {
+      console.info('Generating cover images');
 
-  // existing keys will be overriden
-  // api.onCreateNode(node => {
-  //   if ((node.internal.typeName = options.typeName)) {
+      const splitPath = node.path.split('/'); // remove slash(/) from path string
+      const imgName = splitPath[splitPath.length - 1];
+      createImage({
+        output: `${options.outputDir}/${imgName || 'test'}.png`,
+        html: generateHtml(node.title || 'test stuff', options)
+      }).then(() => console.info(`Generated image for ${node.title}`));
 
-  //     const image =
-  //   }
-  // });
+      const coverImagePath = path.relative(options.postDir, options.outputDir);
+
+      node.cover_image = coverImagePath.startsWith('.') ? coverImagePath : `./${coverImagePath}`; // use relative path
+    }
+
+    return node;
+  });
   // console.log(path.relative(options.postDir, options.outputDir));
   // console.log(options);
 };
