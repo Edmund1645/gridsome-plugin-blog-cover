@@ -24,15 +24,15 @@ module.exports = function(api, passedOptions) {
       console.info('Generating cover images');
 
       const splitPath = node.path.split('/'); // remove slash(/) from path string
-      const imgName = splitPath[splitPath.length - 1];
+      const imgName = splitPath[splitPath.length - 1]; // last item in array is the title slug
       createImage({
-        output: `${options.outputDir}/${imgName || 'test'}.png`,
-        html: generateHtml(node.title || 'test stuff', options)
+        output: `${options.outputDir}/${imgName}.png`,
+        html: generateHtml(node.title, options)
       }).then(() => console.info(`Generated image for ${node.title}`));
 
       const coverImagePath = path.relative(options.postDir, options.outputDir);
 
-      node.cover_image = coverImagePath.startsWith('.') ? coverImagePath : `./${coverImagePath}`; // use relative path
+      node.cover_image = coverImagePath.startsWith('.') ? `${coverImagePath}/${imgName}.png` : `./${coverImagePath}/${imgName}.png`; // use relative path
     }
 
     return node;
@@ -40,3 +40,5 @@ module.exports = function(api, passedOptions) {
   // console.log(path.relative(options.postDir, options.outputDir));
   // console.log(options);
 };
+
+// TODO fix path on line 35
