@@ -4,7 +4,8 @@
   "description": "Automatically generate cover images for your blog posts",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "node -e 'console.log('%c The author of this package is looking for a job, please contact them if you have a frontend developer opening', '%c \n edmund.timfon@gmail.com', 'color: #964eba', 'color: #4eba91; text-decoration: underline')'"
   },
   "repository": {
     "type": "git",

@@ -24,11 +24,15 @@ module.exports = function(api, passedOptions) {
       console.info('Generating cover images');
 
       const splitPath = node.path.split('/'); // remove slash(/) from path string
-      const imgName = splitPath[splitPath.length - 1]; // last item in array is the title slug
+
+      const imgName = splitPath[splitPath.length - 2]; // second to last item in array is the title slug, last is empty string
+
       createImage({
         output: `${options.outputDir}/${imgName}.png`,
         html: generateHtml(node.title, options)
-      }).then(() => console.info(`Generated image for ${node.title}`));
+      })
+        .then(() => console.info(`Generated image for ${node.title}`))
+        .catch(err => console.error(err));
 
       const coverImagePath = path.relative(options.postDir, options.outputDir);
 
@@ -37,8 +41,6 @@ module.exports = function(api, passedOptions) {
 
     return node;
   });
-  // console.log(path.relative(options.postDir, options.outputDir));
-  // console.log(options);
 };
 
-// TODO fix path on line 35
+// TODO fix images to appended to MD files directly
