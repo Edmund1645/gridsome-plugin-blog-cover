@@ -1,8 +1,10 @@
+/* eslint-disable no-console */
 /* eslint-disable no-param-reassign */
 
-const path = require('path');
 const createImage = require('node-html-to-image');
-const generateHtml = require('./generateHtml');
+const fs = require('fs-extra');
+const generateHtml = require('./functions/generateHtml');
+const cloudinaryService = require('./services/cloudinary');
 
 const defaultOptions = {
   typeName: 'Post',
@@ -12,35 +14,54 @@ const defaultOptions = {
   imgHeight: '650px',
   border: true,
   domain: 'https://theninja.blog',
-  postDir: 'content/posts/',
-  outputDir: 'content/images/'
+  outputDir: 'content/images/',
+  cloud_name: undefined,
+  api_key: undefined,
+  api_secret: undefined,
+  upload_folder: 'blog_covers'
 };
 
 module.exports = function(api, passedOptions) {
   const options = { ...defaultOptions, ...passedOptions }; // existing keys will be overriden
 
+  cloudinaryService.connect(options);
+
   api.onCreateNode(node => {
-    if (node.internal.typeName === options.typeName) {
+    if (node.internal.typeName === options.typeName && !node[options.coverField]) {
       console.info('Generating cover images');
 
       const splitPath = node.path.split('/'); // remove slash(/) from path string
 
       const imgName = splitPath[splitPath.length - 2]; // second to last item in array is the title slug, last is empty string
 
+      fs.ensureDirSync(options.outputDir); // create output dir if it does not exist
+
+      const output = `${options.outputDir}/${imgName}.png`;
+
       createImage({
-        output: `${options.outputDir}/${imgName}.png`,
+        output,
         html: generateHtml(node.title, options)
       })
-        .then(() => console.info(`Generated image for ${node.title}`))
+        .then(() => {
+          console.info(`Generated image for ${node.title}`);
+          cloudinaryService.upload(output, { use_filename: true, folder: options.upload_folder }, function(result, error) {
+            if (error) {
+              console.error(error);
+            } else {
+              node[options.coverField] = result.secure_url;
+            }
+          });
+        })
         .catch(err => console.error(err));
-
-      const coverImagePath = path.relative(options.postDir, options.outputDir);
-
-      node.cover_image = coverImagePath.startsWith('.') ? `${coverImagePath}/${imgName}.png` : `./${coverImagePath}/${imgName}.png`; // use relative path
     }
 
     return node;
   });
+
+  //  clean out images generated
+  fs.emptyDir(options.outputDir)
+    .then(() => console.log('Cleaned output directory'))
+    .catch(err => console.error(err));
 };
 
 // TODO fix images to appended to MD files directly

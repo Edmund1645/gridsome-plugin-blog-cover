@@ -24,6 +24,8 @@
   },
   "homepage": "https://github.com/Edmund1645/gridsome-plugin-blog-cover#readme",
   "dependencies": {
+    "cloudinary": "^1.19.0",
+    "fs-extra": "^8.1.0",
     "node-html-to-image": "^1.1.0"
   },
   "peerDependencies": {
