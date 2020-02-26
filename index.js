@@ -44,8 +44,12 @@ module.exports = function(api, passedOptions) {
       })
         .then(() => {
           console.info(`Generated image for ${node.title}`);
-          cloudinaryService.upload(output, { use_filename: true, folder: options.upload_folder, eager: [{ quality: 80 }] }, function(result, error) {
-            node[options.coverField] = result.secure_url;
+          cloudinaryService.upload(output, { use_filename: true, folder: options.upload_folder, eager: [{ quality: 80 }] }, function(error, result) {
+            if (error) {
+              console.error(error);
+            } else {
+              node[options.coverField] = result.secure_url;
+            }
           });
         })
         .catch(err => console.error(err));
