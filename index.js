@@ -29,7 +29,6 @@ module.exports = function(api, passedOptions) {
   api.onCreateNode(node => {
     if (node.internal.typeName === options.typeName && !node[options.coverField]) {
       console.info('Generating cover images');
-      node[options.coverField] = '';
 
       const splitPath = node.path.split('/'); // remove slash(/) from path string
 
@@ -46,11 +45,7 @@ module.exports = function(api, passedOptions) {
         .then(() => {
           console.info(`Generated image for ${node.title}`);
           cloudinaryService.upload(output, { use_filename: true, folder: options.upload_folder, eager: [{ quality: 80 }] }, function(result, error) {
-            if (error) {
-              console.error(error);
-            } else {
-              node[options.coverField] = result.secure_url;
-            }
+            node[options.coverField] = result.secure_url;
           });
         })
         .catch(err => console.error(err));
