@@ -29,6 +29,7 @@ module.exports = function(api, passedOptions) {
   api.onCreateNode(node => {
     if (node.internal.typeName === options.typeName && !node[options.coverField]) {
       console.info('Generating cover images');
+      node[options.coverField] = '';
 
       const splitPath = node.path.split('/'); // remove slash(/) from path string
 
