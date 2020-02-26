@@ -44,7 +44,7 @@ module.exports = function(api, passedOptions) {
       })
         .then(() => {
           console.info(`Generated image for ${node.title}`);
-          cloudinaryService.upload(output, { use_filename: true, folder: options.upload_folder }, function(result, error) {
+          cloudinaryService.upload(output, { use_filename: true, folder: options.upload_folder, eager: [{ quality: 80 }] }, function(result, error) {
             if (error) {
               console.error(error);
             } else {
