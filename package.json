@@ -2,10 +2,10 @@
   "name": "gridsome-plugin-blog-cover",
   "version": "0.0.4-alpha.1",
   "description": "Automatically generate cover images for your blog posts",
-  "main": "index.js",
+  "main": "gridsome.server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "echo \"\\x1b[35m The author of this package is looking for a job, please contact them if you have a frontend developer opening \n \\x1b[32m \n edmund.timfon@gmail.com\""
+    "postinstall": " node -e \"try{require('./postinstall')}catch(e){}\""
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/Edmund1645/gridsome-plugin-blog-cover#readme",
   "dependencies": {
+    "chalk": "^3.0.0",
     "cloudinary": "^1.19.0",
     "fs-extra": "^8.1.0",
     "node-html-to-image": "^1.1.0"
