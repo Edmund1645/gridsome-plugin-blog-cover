@@ -109,5 +109,5 @@ query{
 ## Example
 ![test Image](./content/images/test.png)
 ---
-
+Pleas support me on Patreon if you find this package helpful :)
 [![Become a Patron!](https://i.imgur.com/BbE01dL.png)](https://www.patreon.com/bePatron?u=19608418)
